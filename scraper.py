@@ -9,7 +9,7 @@ import sqlite3
 
 # Store data in db
 def store_db(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link):
-    conn = sqlite3.connect('amazon_search.db')
+    conn = sqlite3.connect('Data/amazon_search.db')
     curr = conn.cursor()
 
     # create table
