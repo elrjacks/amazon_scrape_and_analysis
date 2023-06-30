@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import sqlite3
 
+
 # Store data in db
 def store_db(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link):
     conn = sqlite3.connect('Data/amazon_search.db')

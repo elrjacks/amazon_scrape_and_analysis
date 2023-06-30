@@ -40,9 +40,23 @@ def reviews(min_reviews):
     return review_df
 
 
-def matches():
-    match_df = pd.merge(price_range_df, rating_df, on='ASIN', how='inner')
+def matches(df1, df2, df3):
+    global match_df
+    match_df = pd.merge(df1, df2)
+
+    # if you want to merge all three set indicator to Y
+    if all_three == 'Y':
+        match_df = pd.merge(match_df, df3)
+
     print(match_df.head())
+    # find the average rating for your matches
+    average_rating(match_df)
+
+
+def average_rating(data_frame):
+    avg_rating = match_df.loc[:, 'rating_num'].mean()
+    print('Average rating out of five stars for your perfect product is = ')
+    print(avg_rating)
 
 
 if __name__ == '__main__':
@@ -50,14 +64,16 @@ if __name__ == '__main__':
     # gather all data from web scrape into data frame
     get_data()
     # get data in new data frame that is in specified price range
-    price_range(100, 350)
+    price_range(100, 500)
     # find data within your desired out of 5-star rating
     ratings(4.5)
     # find products with a specified number of reviews
     reviews(500)
+    # match on price and rating is default
+    # match on price rating and reviews may be done
+    all_three = 'N'
     # find products that match all your requirements
-    matches()
-    # find the average rating for your matches
+    matches(price_range_df, rating_df, review_df)
 
     # find the rating above the average for your matches - sort my number of reviews
 
