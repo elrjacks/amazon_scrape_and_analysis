@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 # import from webdriver_manager (using underscore)
 from webdriver_manager.chrome import ChromeDriverManager
 import sqlite3
-
+#need to add error handling for when next page isn't available
 
 # Store data in db
 def store_db(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link):
@@ -15,12 +15,20 @@ def store_db(product_asin, product_name, product_price, product_ratings, product
 
     # create table
     curr.execute(
-        '''CREATE TABLE IF NOT EXISTS search_result (ASIN text, name text, price real, ratings integer, ratings_num text, details_link text)''')
-    # insert data into a table
-    curr.executemany(
-        "INSERT INTO search_result (ASIN, name, price, ratings, ratings_num, details_link) VALUES (?,?,?,?,?,?)",
-        list(zip(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link)))
-
+        '''CREATE TABLE IF NOT EXISTS search_result 
+            (ASIN text PRIMARY KEY NOT NULL, 
+            name text, 
+            price real, 
+            ratings integer, 
+            ratings_num text, 
+            details_link text)''')
+    try:
+        # insert data into a table
+        curr.executemany(
+            "INSERT INTO search_result (ASIN, name, price, ratings, ratings_num, details_link) VALUES (?,?,?,?,?,?)",
+            list(zip(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link)))
+    except sqlite3.IntegrityError:
+        print(f'Non unique product attempted insert - {product_asin}')
     conn.commit()
     conn.close()
 
@@ -109,7 +117,7 @@ def scrape_amazon(keyword, max_pages):
     # wait for the page to download
     driver.implicitly_wait(5)
 
-    while page_number <= max_pages:
+    while page_number < max_pages:
         scrape_page(driver)
         page_number += 1
         driver.get(next_page)
@@ -120,4 +128,4 @@ def scrape_amazon(keyword, max_pages):
 
 if __name__ == '__main__':
     # assign any keyword for searching and max number of pages
-    scrape_amazon('espresso machine', 3)
+    scrape_amazon('espresso machine', 7)
