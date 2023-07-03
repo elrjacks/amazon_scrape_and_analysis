@@ -23,4 +23,4 @@ From the matches data, I calculate the average rating and identify your "perfect
 ---
 ### Example Invocation 
 During the initial **scraper.py** run, we get an amazon_search.db. If I head over to https://sqliteonline.com/, I can pull up the database file that is generated after the run. 
-![Amazon scraped product database](/Screen Captures From Invocation/database.png "Amazon scraped product database")
+![Amazon scraped product database](/Images/database.png "Amazon scraped product database")
