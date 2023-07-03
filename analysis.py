@@ -1,6 +1,7 @@
+# Author: Eleni Jackson
+# Date: 7/3/2023
 import sqlite3
 import pandas as pd
-
 
 
 # read from database
