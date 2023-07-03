@@ -39,5 +39,5 @@ The analysis goes through one more process in which it calculates the average ra
 ---
 ### Coming Soon
 - Data viz
-- More data scraped (product specs)
+- More data scraped (product specs) (search term specific?)
 - Further analysis
