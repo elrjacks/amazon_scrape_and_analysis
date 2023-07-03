@@ -138,4 +138,7 @@ def scrape_amazon(keyword, max_pages):
 
 if __name__ == '__main__':
     # assign any keyword for searching and max number of pages
+    search_term = input('Please type your search term: \n')
+    max_pages = 
+    print()
     scrape_amazon('espresso machine', 9)
