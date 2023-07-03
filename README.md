@@ -34,3 +34,10 @@ The user will get back various csv with various filters applied. This includes o
 The analysis goes through one more process in which it calculates the average rating within all of your matches in the csv (data frame in the code) and outputs all products that have a higher-than-average rating. This way, you see the best of the best products and can find your perfect choice of product.
 ![Your perfect product matches](/Images/best_matches.png "Your perfect product matches")
 
+
+
+---
+### Coming Soon
+- Data viz
+- More data scraped (product specs)
+- Further analysis
