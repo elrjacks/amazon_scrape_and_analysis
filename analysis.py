@@ -19,7 +19,7 @@ def get_data():
 def price_range(lower, upper):
     global price_range_df
     price_range_df = df[(df.price >= lower) & (df.price <= upper)]
-    print("Products in your price range are as follows: ")
+    # print("Products in your price range are as follows: ")
     # print(price_range_df.to_string())
 
 
@@ -28,14 +28,14 @@ def ratings(min_rating):
     df['rating_num'] = df.ratings.str[:3]
     df['rating_num'] = df['rating_num'].astype(float)
     rating_df = df[(df.rating_num >= min_rating)]
-    print("Products in with your desired rating or higher are as follows: ")
+    # print("Products in with your desired rating or higher are as follows: ")
     # print(rating_df.to_string())
 
 
 def reviews(min_reviews):
     global review_df
     review_df = df[(df.ratings_count >= min_reviews)]
-    print("Products with you desired number of reviews or higher are as follows: ")
+    # print("Products with you desired number of reviews or higher are as follows: ")
     # print(review_df.to_string())
 
 
@@ -48,6 +48,7 @@ def matches(df1, df2, df3, number_of_matches):
         match_df = pd.merge(match_df, df3)
     print("Products that are in your desired match result set are as follows: ")
     print(match_df.to_string())
+    match_df.to_csv('Data/matches.csv')
     # find the average rating for your matches
     avg_rating = average_rating(match_df)
     # find your products that are you best match overall
@@ -83,10 +84,11 @@ def driver():
     rev = int(input('What is the minimum number of reviews you would like to see?\n'))
     reviews(rev)
     # match on price and rating is default
-    # match on price rating and reviews may be done
+    # match on price rating and reviews may be done with all three indicator set to Y
     global all_three
     all_three = input('Would you like to see only matches that macth on all three, price range, ratings, and reviews? This will limit your result set. (Y/N)\n')
     num_of_matches = int(input('What total number of matches would you like to see?\n'))
+    print(f'Note: Less than {num_of_matches} will appear if there are not enough products that meet your criteria...')
     # find products that match all your requirements
     matches(price_range_df, rating_df, review_df, num_of_matches)
 

@@ -1,3 +1,4 @@
+import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -6,7 +7,8 @@ from selenium.webdriver.support import expected_conditions as EC
 # import from webdriver_manager (using underscore)
 from webdriver_manager.chrome import ChromeDriverManager
 import sqlite3
-#need to add error handling for when next page isn't available
+from selenium.common.exceptions import NoSuchElementException
+
 
 # Store data in db
 def store_db(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link):
@@ -34,7 +36,7 @@ def store_db(product_asin, product_name, product_price, product_ratings, product
 
 
 # Get data fxn
-def scrape_page(driver):
+def scrape_page(driver, page_number):
     product_name = []
     # ASIN number is used to unqiuely identify Amazon product
     product_asin = []
@@ -89,11 +91,17 @@ def scrape_page(driver):
     # store data from lists to database
     store_db(product_asin, product_name, product_price, product_ratings, product_ratings_num, product_link)
     global next_page
-    next_page = driver.find_element(By.XPATH, './/a[@class="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator"]').get_attribute("href")
+    try:
+        next_page = driver.find_element(By.XPATH, './/a[@class="s-pagination-item s-pagination-next s-pagination-button s-pagination-separator"]').get_attribute("href")
+    except NoSuchElementException:
+        print(f'You made it to the last page of products! Page Number: {page_number}')
+        return 1
+
     # print('Next page is = ')
     # print(next_page)
     # / html / body / div[1] / div[2] / div[1] / div[1] / div / span[1] / div[1] / div[65] / div / div / span / a[1]
     # //*[@id="search"]/div[1]/div[1]/div/span[1]/div[1]/div[65]/div/div/span/a[1] s-pagination-item
+    return 0
 
 
 def scrape_amazon(keyword, max_pages):
@@ -117,8 +125,10 @@ def scrape_amazon(keyword, max_pages):
     # wait for the page to download
     driver.implicitly_wait(5)
 
-    while page_number < max_pages:
-        scrape_page(driver)
+    while page_number <= max_pages:
+        return_code = scrape_page(driver, page_number)
+        if return_code == 1:
+            break
         page_number += 1
         driver.get(next_page)
         driver.implicitly_wait(5)
@@ -128,4 +138,4 @@ def scrape_amazon(keyword, max_pages):
 
 if __name__ == '__main__':
     # assign any keyword for searching and max number of pages
-    scrape_amazon('espresso machine', 7)
+    scrape_amazon('espresso machine', 9)
