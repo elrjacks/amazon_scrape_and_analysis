@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-import numpy as np
+
 
 
 # read from database
@@ -19,6 +19,7 @@ def get_data():
 def price_range(lower, upper):
     global price_range_df
     price_range_df = df[(df.price >= lower) & (df.price <= upper)]
+    price_range_df.to_csv('Data/price_range.csv')
     # print("Products in your price range are as follows: ")
     # print(price_range_df.to_string())
 
@@ -28,6 +29,7 @@ def ratings(min_rating):
     df['rating_num'] = df.ratings.str[:3]
     df['rating_num'] = df['rating_num'].astype(float)
     rating_df = df[(df.rating_num >= min_rating)]
+    rating_df.to_csv('Data/ratings.csv')
     # print("Products in with your desired rating or higher are as follows: ")
     # print(rating_df.to_string())
 
@@ -35,6 +37,7 @@ def ratings(min_rating):
 def reviews(min_reviews):
     global review_df
     review_df = df[(df.ratings_count >= min_reviews)]
+    review_df.to_csv('Data/reviews_num.csv')
     # print("Products with you desired number of reviews or higher are as follows: ")
     # print(review_df.to_string())
 
