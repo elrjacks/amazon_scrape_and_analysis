@@ -1,5 +1,5 @@
-# amazon_scrape_and_analysis
-## BeautifulSoup web scraping and Analysis
+# Amazon Scrape and Analysis
+## BeautifulSoup Web Scraping and Analysis on Amazon Products
 ---
 ### Why?
 Having coding skills is truly amazing, especially when faced with everyday problems. 
