@@ -24,3 +24,13 @@ From the matches data, I calculate the average rating and identify your "perfect
 ### Example Invocation 
 During the initial **scraper.py** run, we get an amazon_search.db. If I head over to https://sqliteonline.com/, I can pull up the database file that is generated after the run. 
 ![Amazon scraped product database](/Images/database.png "Amazon scraped product database")
+
+To analyze the data, I run **analysis.py**. Using.head() I get the first few rows of the total records in the database. This is good for providing a quick view of the provided data. 
+![Total records head function](/Images/all_products_head.png "Total records in data frame head function")
+I allow a multitude of user inputs through this program. Just like you can filter on Amazon, I provide filtering options here that are a bit more extensive for the data I decided I needed. 
+![User input filters](/Images/user_input_cmd.png "User input filters")
+The user will get back various csv with various filters applied. This includes one with all products in their desired price range, one with all products with their minimum rating and higher, and one with all of their matches (in their price range and rating (and optionally their review count to ensure the product has enough reviews to their liking.))
+![Matches CSV File](/Images/matches_to_csv.png "Matches CSV File")
+The analysis goes through one more process in which it calculates the average rating within all of your matches in the csv (data frame in the code) and outputs all products that have a higher-than-average rating. This way, you see the best of the best products and can find your perfect choice of product.
+![Your perfect product matches](/Images/best_matches.png "Your perfect product matches")
+
